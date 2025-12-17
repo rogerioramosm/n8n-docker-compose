@@ -11,17 +11,17 @@ Execute as permissões do diretório de volumes antes de iniciar o `docker-compo
 ```bash
 
   # pasta /data é onde os volumes serão montados
-  sudo chown -R 1000:1000 /data
+  sudo chown -R 1000:1000 data/
 
   sudo chmod -R 755 data/
 
 ```
 
-## n8n-start
+## n8n-start <i>(BASICO !!!)</i>
 
   + Esta versão não esta configurada para salvar os dados em disco, salva apenas em `volumes` `docker`. Cuidado ao remover os volumes para não perder os dados salvos.
 
-## n8n-postgres
+## n8n-postgres <i>(BASICO !!!)</i>
 
   + Esta versão esta configurada com volumes em persistencia da pasta `data`.
 
@@ -33,11 +33,21 @@ Execute as permissões do diretório de volumes antes de iniciar o `docker-compo
 
 ## Inicialização
 
+### Linux
+
 ```bash
   # Linux
   sudo docker-compose up --build --force-recreate -d
 
-  # Windows
+  # Se ocorrer erro de permissão de acesso, libere novamente as permissões do diretório ./data
+  sudo chown -R 1000:1000 ./data
+
+  sudo chmod -R 755 ./data
+```
+
+### Windows
+
+```bash
   docker-compose up --build --force-recreate -d
 
   # Se na primeira tentativa gerar erro, pause e inicie novamente

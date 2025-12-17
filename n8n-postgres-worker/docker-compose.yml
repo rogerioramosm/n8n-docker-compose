@@ -1,5 +1,3 @@
-version: "3.8"
-
 volumes:
   db_storage:
   n8n_storage:
@@ -19,6 +17,8 @@ x-shared: &shared
     - QUEUE_BULL_REDIS_HOST=redis
     - QUEUE_HEALTH_CHECK_ACTIVE=true
     - N8N_ENCRYPTION_KEY=${ENCRYPTION_KEY}
+    - GENERIC_TIMEZONE=${TIMEZONE}
+    - TZ=${TIMEZONE}
   links:
     - postgres
     - redis
@@ -34,7 +34,11 @@ services:
   postgres:
     image: postgres:16
     restart: always
+    ports:
+      - "${PG_PORT}:5432"
     environment:
+      - GENERIC_TIMEZONE=${TIMEZONE}
+      - TZ=${TIMEZONE}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
@@ -56,6 +60,9 @@ services:
   redis:
     image: redis:6-alpine
     restart: always
+    environment:
+      - GENERIC_TIMEZONE=${TIMEZONE}
+      - TZ=${TIMEZONE}
     volumes:
       - redis_storage:/data
     healthcheck:

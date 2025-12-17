@@ -19,6 +19,10 @@ x-shared: &shared
     - N8N_ENCRYPTION_KEY=${ENCRYPTION_KEY}
     - GENERIC_TIMEZONE=${TIMEZONE}
     - TZ=${TIMEZONE}
+    # Configuração para usar em servidor autohospedado sem o uso de localhost.
+    # Por exemplo, se instalou em servidor e irá acessar via endereço IP,
+    #deixe como false, senão, troque para true (default)
+    - N8N_SECURE_COOKIE=false
   links:
     - postgres
     - redis

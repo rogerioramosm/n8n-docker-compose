@@ -19,10 +19,14 @@ x-shared: &shared
     - N8N_ENCRYPTION_KEY=${ENCRYPTION_KEY}
     - GENERIC_TIMEZONE=${TIMEZONE}
     - TZ=${TIMEZONE}
+
     # Configuração para usar em servidor autohospedado sem o uso de localhost.
     # Por exemplo, se instalou em servidor e irá acessar via endereço IP,
     #deixe como false, senão, troque para true (default)
     - N8N_SECURE_COOKIE=false
+    - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+    - N8N_HOST=${DOMAIN_NAME}
+    - WEBHOOK_URL=http://${DOMAIN_NAME}:${N8N_PORT}/
   links:
     - postgres
     - redis
@@ -78,7 +82,7 @@ services:
   n8n:
     <<: *shared
     ports:
-      - 5678:5678
+      - ${N8N_PORT}:5678
 
   n8n-worker:
     <<: *shared
